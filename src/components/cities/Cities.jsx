@@ -1,6 +1,9 @@
 function Cities() {
-    return <div>Cities</div>;
-  }
-  
-  export default Cities;
-  
+  return (
+    <div>
+      <h1>Cities</h1>
+    </div>
+  );
+}
+
+export default Cities;

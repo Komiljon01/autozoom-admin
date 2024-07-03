@@ -1,5 +1,7 @@
 function Brands() {
-  return <div>Brands</div>;
+  return <div>
+    <h1>Brands</h1>
+  </div>;
 }
 
 export default Brands;

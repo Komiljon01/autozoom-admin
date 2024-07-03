@@ -1,5 +1,9 @@
 function Models() {
-  return <div>Models</div>;
+  return (
+    <div>
+      <h1>Models</h1>
+    </div>
+  );
 }
 
 export default Models;

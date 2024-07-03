@@ -6,7 +6,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
+import Dashboard from "./components/dashboard/Dashboard";
 import Brands from "./components/brands/Brands";
 import Cars from "./components/cars/Cars";
 import Categories from "./components/categories/Categories";
@@ -20,6 +21,7 @@ function App() {
       <Route path="/">
         <Route index element={<Login />} />
         <Route path="home" element={<Home />}>
+          <Route index path="dashboard" element={<Dashboard />} />
           <Route path="cars" element={<Cars />} />
           <Route path="locations" element={<Locations />} />
           <Route path="brands" element={<Brands />} />
