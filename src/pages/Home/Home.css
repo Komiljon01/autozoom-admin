@@ -7,6 +7,7 @@
 
 #navbar {
   transition: width 0.1s ease;
+  z-index: 100;
 }
 
 .sider {
