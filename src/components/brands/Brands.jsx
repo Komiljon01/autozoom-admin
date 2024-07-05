@@ -21,6 +21,8 @@ function Brands() {
   const [data, setData] = useState();
   const [loader, setLoader] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentBrand, setCurrentBrand] = useState(null);
   const token = localStorage.getItem("access_token");
 
   const normFile = (e) => {
@@ -41,19 +43,26 @@ function Brands() {
       .catch((err) => message.error(err))
       .finally(() => setLoader(false));
   };
-  useEffect(() => getData, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-  // POST
+  // POST or PUT
   const [postName, setPostName] = useState("");
   const [postImage, setPostImage] = useState(null);
 
-  const postData = () => {
+  const handleFormSubmit = () => {
     const formData = new FormData();
     formData.append("title", postName);
-    formData.append("images", postImage);
+    if (postImage) {
+      formData.append("images", postImage);
+    }
 
-    fetch(brandsURL, {
-      method: "POST",
+    const url = isEditMode ? `${brandsURL}/${currentBrand.id}` : brandsURL;
+    const method = isEditMode ? "PUT" : "POST";
+
+    fetch(url, {
+      method: method,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,7 +70,6 @@ function Brands() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         getData();
         setIsModalOpen(false);
         message.success(data.message);
@@ -69,7 +77,7 @@ function Brands() {
         setPostName("");
         form.resetFields();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => message.error(err));
   };
 
   // Delete
@@ -90,6 +98,25 @@ function Brands() {
         }
       })
       .catch((err) => message.error(err));
+  };
+
+  const handleEdit = (brand) => {
+    setIsEditMode(true);
+    setCurrentBrand(brand);
+    setPostName(brand.title);
+    setIsModalOpen(true);
+    form.setFieldsValue({
+      name: brand.title,
+    });
+  };
+
+  const handleAdd = () => {
+    setIsEditMode(false);
+    setCurrentBrand(null);
+    setPostName("");
+    setPostImage(null);
+    setIsModalOpen(true);
+    form.resetFields();
   };
 
   const columns = [
@@ -115,7 +142,7 @@ function Brands() {
     },
     {
       title: (
-        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+        <Button type="primary" onClick={handleAdd}>
           Add Brand
         </Button>
       ),
@@ -139,7 +166,9 @@ function Brands() {
       ),
       action: (
         <Flex gap="small">
-          <Button type="primary">Edit</Button>
+          <Button type="primary" onClick={() => handleEdit(brand)}>
+            Edit
+          </Button>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
@@ -165,9 +194,9 @@ function Brands() {
         pagination={{ pageSize: 5 }}
       />
 
-      {/* POST Modal */}
+      {/* Modal for Add and Edit */}
       <Modal
-        title="Post Brand"
+        title={isEditMode ? "Edit Brand" : "Add Brand"}
         open={isModalOpen}
         onOk={() => setIsModalOpen(false)}
         okText="Submit"
@@ -191,7 +220,7 @@ function Brands() {
           }}
           autoComplete="off"
           layout="vertical"
-          onFinish={postData}
+          onFinish={handleFormSubmit}
         >
           <Form.Item
             label="Name"
@@ -199,7 +228,7 @@ function Brands() {
             rules={[
               {
                 required: true,
-                message: "Please input your name!",
+                message: "Please input the brand name!",
               },
             ]}
           >
@@ -209,12 +238,6 @@ function Brands() {
           <Form.Item
             label="Image"
             name="image"
-            rules={[
-              {
-                required: true,
-                message: "Please input your image!",
-              },
-            ]}
             valuePropName="fileList"
             getValueFromEvent={normFile}
           >
