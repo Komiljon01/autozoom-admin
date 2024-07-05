@@ -186,12 +186,15 @@ function Brands() {
 
   return (
     <section id="brands">
-      <h1>Brands</h1>
+      <h1 style={{marginBottom: "20px"}}>Brands</h1>
       <Table
         loading={loader ? true : false}
         dataSource={dataSource}
         columns={columns}
         pagination={{ pageSize: 5 }}
+        scroll={{
+          x: 500,
+        }}
       />
 
       {/* Modal for Add and Edit */}

@@ -7,17 +7,16 @@ const { Header, Sider, Content } = Layout;
 // Icons
 import { FaHome } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
-import { SiBrandfolder } from "react-icons/si";
-import { SiThemodelsresource } from "react-icons/si";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCity } from "react-icons/fa";
 import { IoCarSport } from "react-icons/io5";
+import { TbBrandBing } from "react-icons/tb";
+import { TbBrandAdobe } from "react-icons/tb";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-
 import logo from "../../assets/autozoom.svg";
 
 function Home() {
@@ -51,12 +50,15 @@ function Home() {
         collapsed={collapsed}
         className="sider"
         width={250}
+        onBreakpoint={setCollapsed}
+        breakpoint="xl"
+        collapsedWidth={80}
       >
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["0"]}
+          defaultSelectedKeys={["1"]}
           items={[
             {
               key: "0",
@@ -70,7 +72,7 @@ function Home() {
             {
               key: "1",
               icon: <FaHome />,
-              label: <Link to="dashboard">Dashboard</Link>,
+              label: <Link>Dashboard</Link>,
             },
             {
               key: "2",
@@ -79,12 +81,12 @@ function Home() {
             },
             {
               key: "3",
-              icon: <SiBrandfolder />,
+              icon: <TbBrandBing />,
               label: <Link to="brands">Brands</Link>,
             },
             {
               key: "4",
-              icon: <SiThemodelsresource />,
+              icon: <TbBrandAdobe />,
               label: <Link to="models">Models</Link>,
             },
             {
