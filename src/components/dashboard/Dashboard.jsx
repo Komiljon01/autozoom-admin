@@ -1,5 +1,6 @@
 import "./Dashboard.css";
-import describtionImg from "../../assets/describtion.png";
+import describtionImg from "../../assets/autozoom.png";
+import { Image } from "antd";
 
 function Dashboard() {
   return (
@@ -15,7 +16,14 @@ function Dashboard() {
       </p>
 
       <div className="dashboard-content">
-        <img src={describtionImg} alt="describtion img" />
+        <Image
+          src={describtionImg}
+          alt="describtion img"
+          style={{
+            clipPath:
+              "polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0 53%, 0% 0%)",
+          }}
+        />
 
         <div className="dashboard-content-text">
           <h2>Intuitive Navigation:</h2>

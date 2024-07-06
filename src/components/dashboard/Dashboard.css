@@ -36,3 +36,59 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 860px) {
+  .dashboard-title {
+    font-size: 30px;
+  }
+
+  #dashboard p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-title {
+    font-size: 25px;
+  }
+
+  #dashboard p {
+    font-size: 16px;
+  }
+
+  .dashboard-content-text h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .dashboard-info {
+    margin: 10px 0;
+  }
+
+  #dashboard p {
+    font-size: 14px;
+  }
+
+  .dashboard-content-text h2 {
+    font-size: 16px;
+  }
+
+  .dashboard-content {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .dashboard-title {
+    font-size: 18px;
+  }
+
+  .dashboard-content {
+    gap: 10px;
+  }
+}

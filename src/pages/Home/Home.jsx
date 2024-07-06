@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button, Dropdown, Layout, Menu, theme } from "antd";
 const { Header, Sider, Content } = Layout;
@@ -26,6 +26,12 @@ function Home() {
   } = theme.useToken();
   const navigate = useNavigate();
 
+  const [tab, setTab] = useState(localStorage.getItem("current-tab") || "1");
+
+  useEffect(() => {
+    localStorage.setItem("current-tab", tab);
+  }, [tab]);
+
   const items = [
     {
       key: "1",
@@ -34,6 +40,7 @@ function Home() {
           onClick={() => {
             navigate("/");
             localStorage.removeItem("access_token");
+            localStorage.removeItem("current-tab");
           }}
         >
           Log Out
@@ -58,13 +65,17 @@ function Home() {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={
+            localStorage.getItem("current-tab")
+              ? localStorage.getItem("current-tab")
+              : tab
+          }
           items={[
             {
               key: "0",
               icon: collapsed && <img src={logo} />,
               label: (
-                <Link>
+                <Link onClick={() => setTab("0")}>
                   <h3>AvtoZoomAdmin</h3>
                 </Link>
               ),
@@ -72,37 +83,61 @@ function Home() {
             {
               key: "1",
               icon: <FaHome />,
-              label: <Link>Dashboard</Link>,
+              label: <Link onClick={() => setTab("1")}>Dashboard</Link>,
             },
             {
               key: "2",
               icon: <BiCategory />,
-              label: <Link to="categories">Categories</Link>,
+              label: (
+                <Link onClick={() => setTab("2")} to="categories">
+                  Categories
+                </Link>
+              ),
             },
             {
               key: "3",
               icon: <TbBrandBing />,
-              label: <Link to="brands">Brands</Link>,
+              label: (
+                <Link onClick={() => setTab("3")} to="brands">
+                  Brands
+                </Link>
+              ),
             },
             {
               key: "4",
               icon: <TbBrandAdobe />,
-              label: <Link to="models">Models</Link>,
+              label: (
+                <Link onClick={() => setTab("4")} to="models">
+                  Models
+                </Link>
+              ),
             },
             {
               key: "5",
               icon: <FaLocationDot />,
-              label: <Link to="locations">Locations</Link>,
+              label: (
+                <Link onClick={() => setTab("5")} to="locations">
+                  Locations
+                </Link>
+              ),
             },
             {
               key: "6",
               icon: <FaCity />,
-              label: <Link to="cities">Cities</Link>,
+              label: (
+                <Link onClick={() => setTab("6")} to="cities">
+                  Cities
+                </Link>
+              ),
             },
             {
               key: "7",
               icon: <IoCarSport />,
-              label: <Link to="cars">Cars</Link>,
+              label: (
+                <Link onClick={() => setTab("7")} to="cars">
+                  Cars
+                </Link>
+              ),
             },
           ]}
         />
